@@ -4,14 +4,11 @@ const router = express.Router();
 // Load Book model
 const Book = require('../../models/Books');
 
-// @route GET api/books/test
-// @description tests books route
-// @access Public
+// Test API
 router.get('/test', (req, res) => res.send('book route testing!'));
 
-// @route   GET api/books
-// @desc    Get all books
-// @access  Public
+
+// Get all books
 router.get('/', (req, res) => {
     Book.find()
       .then(books => res.json(books))
@@ -20,7 +17,6 @@ router.get('/', (req, res) => {
 
 
   // Search API
-
 router.get('/search', (req, res) => {
     const { title, author, description,publisher } = req.query;  // Query parameters for search
 
@@ -55,27 +51,21 @@ router.get('/search', (req, res) => {
         .catch(err => res.status(500).json({ error: 'An error occurred while searching for books', err: err }));
 });
   
-  // @route   GET api/books/:id
-  // @desc    Get single book by id
-  // @access  Public
+// Get Book by ID
   router.get('/:id', (req, res) => {
     Book.findById(req.params.id)
       .then(book => res.json(book))
       .catch(err => res.status(404).json({ nobookfound: 'No Book found', err:err }));
   });
   
-  // @route   POST api/books
-  // @desc    Add/save book
-  // @access  Public
+  // Add Book API
   router.post('/', (req, res) => {
     Book.create(req.body)
       .then(book => res.json({ msg: 'Book added successfully' , book:book}))
       .catch(err => res.status(400).json({ error: 'Unable to add this book', err:err }));
   });
   
-  // @route   PUT api/books/:id
-  // @desc    Update book by id
-  // @access  Public
+ // Update Book API
   router.put('/:id', (req, res) => {
     Book.findByIdAndUpdate(req.params.id, req.body)
       .then(book => res.json({ msg: 'Updated successfully', book:book }))
@@ -84,18 +74,14 @@ router.get('/search', (req, res) => {
       );
   });
   
-  // @route   DELETE api/books/:id
-  // @desc    Delete book by id
-  // @access  Public
+ // Single Delete Book API
   router.delete('/:id', (req, res) => {
     Book.findByIdAndDelete(req.params.id)
       .then(book => res.json({ mgs: 'Book entry deleted successfully', book:book }))
       .catch(err => res.status(404).json({ error: 'No such a book' , err:err}));
   });
 
-
-  //Multiple delete
-
+// Multiple Delete Book API
   router.delete('/', (req, res) => {
     const { ids } = req.body;  // Expecting an array of IDs in the request body
 

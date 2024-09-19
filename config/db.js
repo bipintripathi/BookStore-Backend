@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');	
 const db = "mongodb://localhost:27017/books";
-mongoose.set("strictQuery", true, "useNewUrlParser", true);
+
+
+mongoose.set("strictQuery", true);
 
 const connectDB = async ()=>{
     try{
@@ -13,4 +15,4 @@ const connectDB = async ()=>{
     }
 }
 
-module.exports = connectDB;
+module.exports = connectDB; 
